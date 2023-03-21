@@ -6,7 +6,9 @@
 #include <glload/gl_3_2_comp.h>
 #include <GL/freeglut.h>
 
-
+/**
+* Compiles the given shader code
+*/
 GLuint CreateShader(GLenum eShaderType, const std::string &strShaderFile)
 {
 	GLuint shader = glCreateShader(eShaderType);
@@ -72,7 +74,7 @@ GLuint theProgram;
 
 const std::string strVertexShader(
 	"#version 330\n"
-	"layout(location = 0) in vec4 position;\n"
+	"layout(location = 0) in vec4 position;\n" // Associate position with the 0th attribute index
 	"void main()\n"
 	"{\n"
 	"   gl_Position = position;\n"
@@ -112,11 +114,11 @@ GLuint vao;
 
 void InitializeVertexBuffer()
 {
-	glGenBuffers(1, &positionBufferObject);
+	glGenBuffers(1, &positionBufferObject); // Create the buffer object, assigning its handle to positionBufferObject
 
-	glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject); // Give the GPU context for positionBufferObject
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW); // Allocate GPU memory and copy our vertex data into it
+	glBindBuffer(GL_ARRAY_BUFFER, 0); // Cleanup. Disassociate the object from the GL_ARRAY_BUFFER so another object may use it
 }
 
 //Called after the window and OpenGL are initialized. Called exactly once, before the main loop.
@@ -139,13 +141,13 @@ void display()
 
 	glUseProgram(theProgram);
 
-	glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
+	glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject); // Bind to tell GPU we will use this buffer object
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0); // Key concept: Tells OpenGL the format of the data in the buffer object
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLES, 0, 3); // Perform rendering. Uses the currently bound buffer (positionBufferObject) as the input data
 
-	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(0); // cleanup
 	glUseProgram(0);
 
 	glutSwapBuffers();

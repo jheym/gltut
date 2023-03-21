@@ -21,13 +21,15 @@ void InitializeProgram()
 	theProgram = Framework::CreateProgram(shaderList);
 }
 
+// Two consecutive arrays are being stored here. Vertex offset = [0] and color offset = [12]
+// Data is prepared to be used with vec4 types. sizeof(vec4) = 4 * sizeof(float) = 16 bytes
 const float vertexData[] = {
-	 0.0f,    0.5f, 0.0f, 1.0f,
-	 0.5f, -0.366f, 0.0f, 1.0f,
-	-0.5f, -0.366f, 0.0f, 1.0f,
-	 1.0f,    0.0f, 0.0f, 1.0f,
-	 0.0f,    1.0f, 0.0f, 1.0f,
-	 0.0f,    0.0f, 1.0f, 1.0f,
+	 0.0f,    0.5f, 0.0f, 1.0f,	// top
+	 0.5f, -0.366f, 0.0f, 1.0f,	// bottom right
+	-0.5f, -0.366f, 0.0f, 1.0f,	// bottom left
+	 1.0f,    0.0f, 0.0f, 1.0f, // R
+	 0.0f,    1.0f, 0.0f, 1.0f,	// G
+	 0.0f,    0.0f, 1.0f, 1.0f,	// B
 };
 
 GLuint vertexBufferObject;
