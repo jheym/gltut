@@ -35,7 +35,7 @@ const float vertexData[] = {
 GLuint vertexBufferObject;
 GLuint vao;
 
-
+// This is all the same as it was in Tut1.cpp
 void InitializeVertexBuffer()
 {
 	glGenBuffers(1, &vertexBufferObject);
@@ -66,18 +66,19 @@ void display()
 	glUseProgram(theProgram);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(0); // layer 0
+	glEnableVertexAttribArray(1); // layer 1
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void*)48);
-
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void*)48); // The offset of the color data is 12 floats = 48 bytes
+	
+	// Sends both arrays to the vertex shader
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glUseProgram(0);
 
-	glutSwapBuffers();
+	glutSwapBuffers(); // 
 	glutPostRedisplay();
 }
 
@@ -85,7 +86,7 @@ void display()
 //This is an opportunity to call glViewport or glScissor to keep up with the change in size.
 void reshape (int w, int h)
 {
-	glViewport(0, 0, (GLsizei) w, (GLsizei) h);
+	glViewport(100, 100, (GLsizei) w, (GLsizei) h);
 }
 
 //Called whenever a key on the keyboard was pressed.
