@@ -20,6 +20,8 @@ void InitializeProgram()
 
 	theProgram = Framework::CreateProgram(shaderList);
 
+	// Key concept: Getting the location of the uniform variable declared in the vertex shader
+	// The location is an integer corresponding to where the variable is set in the program object.
 	offsetLocation = glGetUniformLocation(theProgram, "offset");
 }
 
@@ -52,7 +54,7 @@ void init()
 	glBindVertexArray(vao);
 }
 
-
+// A lot of this can be moved to shaders too. Refer to VertCalcOffset.cpp
 void ComputePositionOffsets(float &fXOffset, float &fYOffset)
 {
 	const float fLoopDuration = 5.0f;

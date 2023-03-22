@@ -51,7 +51,8 @@ void init()
 	glBindVertexArray(vao);
 }
 
-
+// This is using the CPU to compute offsets for just one triangle (3 vertices). 
+// This implementation is not ideal for many objects or vertices as most of the program would be spent on the cpu.
 void ComputePositionOffsets(float &fXOffset, float &fYOffset)
 {
 	const float fLoopDuration = 5.0f;
@@ -77,6 +78,7 @@ void AdjustVertexData(float fXOffset, float fYOffset)
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
+	// glBufferSubData updates buffer object contents partially. It's like memcpy for GPU memory.
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertexPositions), &fNewData[0]);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
